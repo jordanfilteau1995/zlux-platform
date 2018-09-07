@@ -16,27 +16,27 @@ export class NotificationManager implements MVDHosting.NotificationManagerInterf
   /* The cache simply stores all notifications
    * on the virtual desktop.
    */
-  private notificationCache: Notification[];
+  private notificationCache: any[];
 
   /* Handlers are used to notify an application
    * when a notification has been added. The application
    * should implement NotificationWatcherInterface and
    * call addMessageHandler(this).
    */
-  private handlers: MVDHosting.NotificationWatcher[];
+  private handlers: any[];
 
   /* NotificationManager is instantiated on start of virtual desktop,
    * so there is no need to create it yourself within an application.
    */
   constructor() {
-    this.notificationCache = new Array<Notification>();
-    this.handlers = new Array<MVDHosting.NotificationWatcher>();
+    this.notificationCache = new Array<any>();
+    this.handlers = new Array<any>();
   }
 
   /* Pushes a notification to the cache. We are
    * expecting an object of type Notification.
    */
-  push(notification: Notification): void {
+  push(notification: any): void {
     this.notificationCache.push(notification);
     for (let i = 0; i < this.handlers.length; i++) {
       this.handlers[i].handleMessageAdded();
@@ -49,7 +49,7 @@ export class NotificationManager implements MVDHosting.NotificationManagerInterf
    * currently unsure of a use case of this,
    * but it's useful for testing.
    */
-  pop(): Notification | void {
+  pop(): any | void {
     let n = this.notificationCache.pop();
     for (let i = 0; i < this.handlers.length; i++) {
       this.handlers[i].handleMessageAdded();
@@ -63,7 +63,7 @@ export class NotificationManager implements MVDHosting.NotificationManagerInterf
    * first; thus, the copied array is reversed
    * before it is returned.
    */
-  getAll(): Notification[] {
+  getAll(): any[] {
     let copy: Notification[] = this.notificationCache.slice(0);
     copy.reverse();
 
@@ -75,7 +75,7 @@ export class NotificationManager implements MVDHosting.NotificationManagerInterf
    *    - System:
    *    - Application:
    */
-  getAllByCategory(type: MVDHosting.NotificationType): Notification[] {
+  getAllByCategory(type: MVDHosting.NotificationType): any[] {
     var filtered: Notification[] = [];
     var i: number;
 
@@ -106,7 +106,7 @@ export class NotificationManager implements MVDHosting.NotificationManagerInterf
   /* Allows other applications to know
    * when a new notification is added.
    */
-  addMessageHandler(object: MVDHosting.NotificationWatcher) {
+  addMessageHandler(object: any) {
     this.handlers.push(object);
   }
 }
